@@ -339,14 +339,12 @@ public class PlayerMovement : MonoBehaviour
                 teleporter.TeleportPlayer(this);
             }
         }
-        if (other.CompareTag("EdgeTopA")) // Replace "YourTilemapTag" with the actual tag of your tilemap
+        Debug.Log("OnTriggerEnter2D with: " + other.gameObject.name + " (Tag: " + other.tag + ")");
+        if (other.CompareTag("Key")) // Replace "YourTilemapTag" with the actual tag of your tilemap
         {
-            Tilemap tilemap = other.GetComponent<Tilemap>();
-            if (tilemap != null)
-            {
-                Debug.Log("Smetlje");
-                ChangeTilemapOrderInLayer(tilemap, 2); // Set a higher order in layer when player enters
-            }
+           Key keyScript = other.GetComponent<Key>();
+            keyScript.Collect();
+            Debug.Log("Smetlje");                       
         }
         if (isTeleporting) return;
     }

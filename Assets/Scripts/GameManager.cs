@@ -3,25 +3,66 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameMenager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     [SerializeField] private string mainMenuScene = "MainMenuScene";
     [SerializeField] private string levelScene = "SampleScene";
-    //[SerializeField] private string[] levelScene = "SampleScene"; -> ako imam vise levela
+    [SerializeField] private GameObject pauseMenuPanel;
+    [SerializeField] private GameObject levelCompletionPanel;
+    [SerializeField] private string levelSelection = "LevelSelection";
 
-    public void Pause(bool pause)
+    private bool isPaused = false;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isPaused)
+            {
+                Resume();
+            }
+            else
+            {
+                Pause();
+            }
+        }
+    }
+
+    public void LevelCompleted()
+    {
+        Debug.Log("LevelCompleted() called - about to activate panel");
+
+        levelCompletionPanel.SetActive(true); // Activate the panel
+
+        Debug.Log("LevelCompleted() - panel should be active");
+
+        Time.timeScale = 0f; // Pause the game
+        isPaused = true;
+    }
+
+    public void Pause()
     {
         Time.timeScale = 0f;
+        pauseMenuPanel.SetActive(true);
+        isPaused = true;
     }
 
     public void Resume()
     {
         Time.timeScale = 1f;
+        pauseMenuPanel.SetActive(false);
+        isPaused = false;
     }
 
-    public void ToMainMeun()
+    public void ToMainMenu()
     {
+        Time.timeScale = 1f; // Ensure the game is unpaused
         SceneManager.LoadScene(mainMenuScene);
+    }
+
+    public void ToLevelSelection() 
+    {
+        SceneManager.LoadScene(levelSelection);
     }
 
     public void toLevel()
@@ -29,18 +70,12 @@ public class GameMenager : MonoBehaviour
         SceneManager.LoadScene(levelScene);
     }
 
-    // public void toLevel(int levelindex)
-    //{
-    //  SceneManager.LoadScene(levelScene);   --ako imam vise levela.
-    //}
-
-
     public void Quit()
     {
-#if UNITY_EDITOR    //ovo mi sluzi da demostriram pravi quit u unity-u, jer inace se nece nista dogoditi aok ostavim samo application.quit().
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
-       Application.Quit();
+        Application.Quit();
 #endif
     }
 }

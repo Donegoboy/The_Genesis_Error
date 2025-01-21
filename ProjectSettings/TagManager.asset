@@ -22,6 +22,8 @@ TagManager:
   - TeleportType9
   - DestructableTile
   - OneWayTile
+  - Key
+  - Exit
   layers:
   - Default
   - TransparentFX
