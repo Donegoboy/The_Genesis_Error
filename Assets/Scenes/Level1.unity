@@ -3412,6 +3412,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLocked: 1
+  unlockedSprite: {fileID: 1760945667, guid: 5213f5f091836b44f8e686b5164f8b85, type: 3}
 --- !u!61 &104216597
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -16511,12 +16512,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1058858981638197323, guid: 4669f97f902647e4bac3b459d4e99e87, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.93903804
+      objectReference: {fileID: 0}
+    - target: {fileID: 1058858981638197323, guid: 4669f97f902647e4bac3b459d4e99e87, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.7314117
+      objectReference: {fileID: 0}
+    - target: {fileID: 1058858981638197323, guid: 4669f97f902647e4bac3b459d4e99e87, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.5
+      value: 3.4815
       objectReference: {fileID: 0}
     - target: {fileID: 1058858981638197323, guid: 4669f97f902647e4bac3b459d4e99e87, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.61
+      value: 2.4141
       objectReference: {fileID: 0}
     - target: {fileID: 1058858981638197323, guid: 4669f97f902647e4bac3b459d4e99e87, type: 3}
       propertyPath: m_LocalPosition.z

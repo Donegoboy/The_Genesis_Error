@@ -6,19 +6,20 @@ public class Exit : MonoBehaviour
 {
     public bool isLocked = true;
     private GameManager gameManager;
+    public Sprite unlockedSprite;
+    private SpriteRenderer spriteRenderer;
 
     private void Start()
     {
-       gameManager = FindObjectOfType<GameManager>();
-        
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     public void Unlock()
     {
         isLocked = false;
         Debug.Log("Exit unlocked!");
-
-        // Add any visual changes for unlocking (e.g., change sprite, play animation)
+        spriteRenderer.sprite = unlockedSprite;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
