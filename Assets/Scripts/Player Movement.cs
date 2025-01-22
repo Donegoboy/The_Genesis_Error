@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     public Quaternion targetRotation;
     private bool isDestroyed = false; // Flag to indicate if the player is destroyed
     private Coroutine snapCoroutine;
+    private GameManager gameManager;
 
     private GameObject activeCamera;
 
@@ -53,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
+        gameManager = FindObjectOfType<GameManager>();
         rb = GetComponent<Rigidbody2D>();
         circleCollider = GetComponent<CircleCollider2D>();
         rb.gravityScale = 0;
@@ -66,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void Update()
-    {
+    {    
         if (!isDestroyed && !isTeleporting)
         {     
             HandleInput();     
@@ -316,8 +318,6 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
 
-            // Check for holes
-            CheckForHole();
         }
         else
         {
@@ -349,29 +349,6 @@ public class PlayerMovement : MonoBehaviour
         if (isTeleporting) return;
     }
 
-
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("EdgeTopA")) // Replace "YourTilemapTag" with the actual tag of your tilemap
-        {
-            Tilemap tilemap = other.GetComponent<Tilemap>();
-            if (tilemap != null)
-            {
-                ChangeTilemapOrderInLayer(tilemap, 0); // Reset order in layer when player exits
-            }
-        }
-    }
-
-    private void ChangeTilemapOrderInLayer(Tilemap tilemap, int orderInLayer)
-    {
-        TilemapRenderer renderer = tilemap.GetComponent<TilemapRenderer>();
-        if (renderer != null)
-        {
-            renderer.sortingOrder = orderInLayer;
-        }
-    }
-
     public void CheckForHole()
     {
         // Check if the player is over a hole tile only if they are not jumping
@@ -389,6 +366,8 @@ public class PlayerMovement : MonoBehaviour
                 // Disable the collider to prevent further triggering
                 circleCollider.enabled = false;
                 Destroy(gameObject); // Or your game over logic
+                gameManager.onDeath();
+
             }
         }
     }
@@ -400,13 +379,7 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, circleCollider.radius * 0.7f);
     }
-    public void StopSnapCoroutine()
-    {
-        if (snapCoroutine != null)
-        {
-            StopCoroutine(snapCoroutine);
-        }
-    }
+
     public void SnapToGrid()
     {
         // Check if the GameObject is still active (not destroyed)
