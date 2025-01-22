@@ -1,23 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerInventory : MonoBehaviour
 {
-    public int numberOfKeys = 0; // Current number of keys collected
+    public int numberOfKeys = 0;
     public int keysNeededToUnlockExit = 3; // Set this in the Inspector
+    public Image[] keyImages; // Array to hold the UI Images for the keys
+
+    public Sprite blackKeySprite;
+    public Sprite coloredKeySprite;
+
+    private void Start()
+    {
+        // Initialize all key images to the black key sprite
+        foreach (Image keyImage in keyImages)
+        {
+            if (keyImage != null)
+            {
+                keyImage.sprite = blackKeySprite;
+            }
+        }
+    }
 
     public void AddKey()
     {
-        numberOfKeys++;
-        Debug.Log("Key collected! Total keys: " + numberOfKeys);
-
-        // Check if enough keys are collected to unlock the exit
-        if (numberOfKeys >= keysNeededToUnlockExit)
+        if (numberOfKeys < keyImages.Length)
         {
-            UnlockExit();
+            // Update the corresponding UI key image to the colored sprite
+            keyImages[numberOfKeys].sprite = coloredKeySprite;
+
+            numberOfKeys++;
+            Debug.Log("Key collected! Total keys: " + numberOfKeys);
+
+            // Check if enough keys are collected to unlock the exit
+            if (numberOfKeys >= keysNeededToUnlockExit)
+            {
+                UnlockExit();
+            }
         }
     }
+
+
 
     private void UnlockExit()
     {

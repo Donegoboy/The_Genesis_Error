@@ -5,7 +5,17 @@ using UnityEngine;
 
 public class CameraZoneTrigger : MonoBehaviour
 {
-    public string cameraID; //  e.g., "Front", "Back", "Top", etc.
+    public string cameraID; // e.g., "Front", "Back", "Top", etc.
+    private UICubeManager uiCubeManager;
+
+    private void Start()
+    {
+        uiCubeManager = FindObjectOfType<UICubeManager>();
+        if (uiCubeManager == null)
+        {
+            Debug.LogError("UICubeManager not found in the scene!");
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -15,6 +25,11 @@ public class CameraZoneTrigger : MonoBehaviour
             if (cameraController != null)
             {
                 cameraController.SwitchCamera(cameraID);
+            }
+
+            if (uiCubeManager != null)
+            {
+                uiCubeManager.ShowSurface(cameraID); // Update UI cube
             }
         }
     }
