@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Jump Settings")]
     [SerializeField] private float jumpDistance = 2f;
+    [SerializeField] private float jumpDuration = 0.5f; // New variable for jump duration
 
     [Header("Rotation Settings")]
     [SerializeField] private float rotationSpeed = 720f;
@@ -21,9 +22,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask surfaceLayer; // Use for movement collision checks
     [SerializeField] private LayerMask holeLayer; // Use for hole detection
     [SerializeField] private LayerMask teleporterLayer;
+    [SerializeField] private LayerMask collisionLayers; // Add this for comprehensive collision checks during lerp
+
+    [SerializeField] private AnimationCurve playerJumpCurve;
 
     private Rigidbody2D rb;
-    private CircleCollider2D circleCollider;
+    private CircleCollider2D circleCollider; // Changed back to CircleCollider2D
     public bool isJumping = false;
     private Vector3 targetPosition;
     public Vector2 facingDirection = Vector2.up;
@@ -56,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
     {
         gameManager = FindObjectOfType<GameManager>();
         rb = GetComponent<Rigidbody2D>();
-        circleCollider = GetComponent<CircleCollider2D>();
+        circleCollider = GetComponent<CircleCollider2D>(); // Get the CircleCollider2D
         rb.gravityScale = 0;
         rb.freezeRotation = true;
 
@@ -68,10 +72,10 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void Update()
-    {    
+    {
         if (!isDestroyed && !isTeleporting)
-        {     
-            HandleInput();     
+        {
+            HandleInput();
             Move();
             RotatePlayer();
         }
@@ -123,6 +127,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+
     private void AttemptRotate(Vector2 direction)
     {
         if (!isRotating && direction != facingDirection)
@@ -191,7 +196,7 @@ public class PlayerMovement : MonoBehaviour
                 hit.collider.CompareTag("TeleportType4") || hit.collider.CompareTag("TeleportType5") || hit.collider.CompareTag("TeleportType6") ||
                 hit.collider.CompareTag("TeleportType7") || hit.collider.CompareTag("TeleportType8") || hit.collider.CompareTag("TeleportType9"))
             {
-                // The object is a teleporter, allow movement 
+                // The object is a teleporter, allow movement 
                 targetPosition = proposedPosition;
                 isMoving = true;
                 canJump = false;
@@ -206,7 +211,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        // No obstacle on the surface layer, check for hole
+        // No obstacle on the surface layer, check for hole using OverlapCircle
         if (Physics2D.OverlapCircle(proposedPosition, circleCollider.radius * 0.7f, holeLayer))
         {
             isMoving = false;
@@ -254,22 +259,75 @@ public class PlayerMovement : MonoBehaviour
             targetPosition = proposedPosition;
             isJumping = true;
             canJump = false; // Disallow jumping while jumping
-            StartCoroutine(Teleport());
+            StartCoroutine(LerpMovement()); // Start the lerp coroutine
         }
     }
 
-    private IEnumerator Teleport()
+    // Replaced Teleport() with LerpMovement()
+    private IEnumerator LerpMovement()
     {
-        // Teleport to the target position
-        transform.position = targetPosition;
-        transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
+        float elapsed = 0f;
+        Vector3 startPosition = transform.position;
+        Vector3 endPosition = targetPosition;
 
+        isMoving = true; 
+        canJump = false;
+        isJumping = true;
+
+        while (elapsed < jumpDuration)
+        {
+            elapsed += Time.deltaTime;
+            float timer = Mathf.Clamp01(elapsed / jumpDuration); // Normalized time (0 to 1)
+
+            float curve = playerJumpCurve.Evaluate(timer);
+
+            // Interpolate position using Lerp and the modified t value
+            Vector3 newPosition = Vector3.Lerp(startPosition, endPosition, curve);
+
+            // Collision check during lerp
+            if (IsCollidingDuringLerp(newPosition))
+            {
+                // Handle collision (e.g., stop lerping, adjust position, etc.)
+                Debug.Log("Collision detected during lerp!");
+
+                // Option 1: Immediately stop and revert to the last valid position
+                transform.position = startPosition;
+                isJumping = false;
+                canJump = true;
+                CheckForHole();
+                yield break; // Exit the coroutine
+            }
+
+            transform.position = newPosition;
+            yield return null; // Wait for the next frame
+        }
+
+        // Ensure reaching the exact target position
+        transform.position = endPosition;
         isJumping = false;
-        canJump = true; // Allow jumping again after teleporting
+        canJump = true;
+        isMoving = false;
+        CheckForHole();
+    }
 
-        CheckForHole(); // Check for hole after jumping
+    // Collision detection during lerp using OverlapCircle
+    private bool IsCollidingDuringLerp(Vector3 newPosition)
+    {
+        // Get all colliders that are overlapping the player's collider at the new position
+        Collider2D[] hits = Physics2D.OverlapCircleAll(newPosition, circleCollider.radius, collisionLayers);
 
-        yield return null;
+        foreach (Collider2D hit in hits)
+        {
+            // Ignore collision with the player itself
+            if (hit != circleCollider)
+            {
+                if (hit.CompareTag("OneWayTile"))
+                    continue;
+                return true; // Collision detected
+            }
+        }
+
+        return false; // No collision
     }
 
     private void Move()
@@ -330,8 +388,8 @@ public class PlayerMovement : MonoBehaviour
         if (isTeleporting) return; // Ignore trigger if already teleporting
 
         if (other.CompareTag("Teleport") || other.CompareTag("TeleportType2") || other.CompareTag("TeleportType3") ||
-                other.CompareTag("TeleportType4") || other.CompareTag("TeleportType5") || other.CompareTag("TeleportType6") ||
-                other.CompareTag("TeleportType7") || other.CompareTag("TeleportType8") || other.CompareTag("TeleportType9"))
+            other.CompareTag("TeleportType4") || other.CompareTag("TeleportType5") || other.CompareTag("TeleportType6") ||
+            other.CompareTag("TeleportType7") || other.CompareTag("TeleportType8") || other.CompareTag("TeleportType9"))
         {
             Teleporter teleporter = other.GetComponent<Teleporter>();
             if (teleporter != null)
@@ -342,9 +400,9 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("OnTriggerEnter2D with: " + other.gameObject.name + " (Tag: " + other.tag + ")");
         if (other.CompareTag("Key")) // Replace "YourTilemapTag" with the actual tag of your tilemap
         {
-           Key keyScript = other.GetComponent<Key>();
+            Key keyScript = other.GetComponent<Key>();
             keyScript.Collect();
-            Debug.Log("Smetlje");                       
+            Debug.Log("Smetlje");
         }
         if (isTeleporting) return;
     }
