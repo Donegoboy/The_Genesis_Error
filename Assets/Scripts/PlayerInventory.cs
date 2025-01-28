@@ -6,15 +6,14 @@ using UnityEngine.UI;
 public class PlayerInventory : MonoBehaviour
 {
     public int numberOfKeys = 0;
-    public int keysNeededToUnlockExit = 3; // Set this in the Inspector
-    public Image[] keyImages; // Array to hold the UI Images for the keys
+    public int keysNeededToUnlockExit = 3;
+    public Image[] keyImages;
 
     public Sprite blackKeySprite;
     public Sprite coloredKeySprite;
 
     private void Start()
     {
-        // Initialize all key images to the black key sprite
         foreach (Image keyImage in keyImages)
         {
             if (keyImage != null)
@@ -28,25 +27,18 @@ public class PlayerInventory : MonoBehaviour
     {
         if (numberOfKeys < keyImages.Length)
         {
-            // Update the corresponding UI key image to the colored sprite
             keyImages[numberOfKeys].sprite = coloredKeySprite;
 
             numberOfKeys++;
-            Debug.Log("Key collected! Total keys: " + numberOfKeys);
 
-            // Check if enough keys are collected to unlock the exit
             if (numberOfKeys >= keysNeededToUnlockExit)
             {
                 UnlockExit();
             }
         }
     }
-
-
-
     private void UnlockExit()
     {
-        // Find the Exit object and unlock it
         GameObject exit = GameObject.FindGameObjectWithTag("Exit");
         if (exit != null)
         {
@@ -55,10 +47,6 @@ public class PlayerInventory : MonoBehaviour
             {
                 exitScript.Unlock();
             }
-        }
-        else //Error handling in case Exit is not defined:
-        {
-            Debug.LogError("UnlockExit failed, make sure Exit tag is defined");
         }
     }
 }

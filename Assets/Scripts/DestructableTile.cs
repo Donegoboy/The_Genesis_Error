@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class DestructibleTile : MonoBehaviour
 {
-    public GameObject replacementTilePrefab; // Drag your replacement tile prefab here
-    public string replacementLayerName = "YourReplacementLayerName"; // Name of the layer
+
+    public GameObject replacementTilePrefab; 
+    public string replacementLayerName = "ReplacementLayerName"; 
+
+    public GameObject otherTile;
 
     private bool playerInside = false;
 
@@ -17,8 +20,6 @@ public class DestructibleTile : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D other) { }
-
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player") && playerInside)
@@ -29,9 +30,7 @@ public class DestructibleTile : MonoBehaviour
 
     private void DestroyTile()
     {
-        // ... (Optional: Visual/Sound effects) ...
 
-        // Spawn the replacement tile
         if (replacementTilePrefab != null)
         {
             Debug.Log("Original tile position: " + transform.position);
@@ -40,19 +39,27 @@ public class DestructibleTile : MonoBehaviour
             GameObject newTile = Instantiate(replacementTilePrefab, transform.position + offset, transform.rotation);
             Debug.Log("New tile position: " + newTile.transform.position);
 
-            // Get the layer index from the layer name
-            int layerIndex = LayerMask.NameToLayer(replacementLayerName);
-
-            if (layerIndex != -1)
-            {
-                newTile.layer = layerIndex;
-            }
-            else
-            {
-                Debug.LogError("Layer with name '" + replacementLayerName + "' not found!");
-            }
+            SetLayerToNewTile(newTile, replacementLayerName);
+        }
+        if (otherTile != null)
+        {
+            Debug.Log("Destroying other tile at: " + otherTile.transform.position);
+            Destroy(otherTile);
         }
 
         Destroy(gameObject);
+    }
+
+    private void SetLayerToNewTile(GameObject obj, string layerName)
+    {
+        int layerIndex = LayerMask.NameToLayer(layerName);
+        if (layerIndex != -1)
+        {
+            obj.layer = layerIndex;
+            foreach (Transform child in obj.transform)
+            {
+                SetLayerToNewTile(child.gameObject, layerName);
+            }
+        }
     }
 }

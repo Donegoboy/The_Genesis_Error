@@ -10,8 +10,7 @@ public class Spikes : MonoBehaviour
         gameManager = FindAnyObjectByType<GameManager>();
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Player landed on spikes");
-            Destroy(collision.gameObject); // Destroy the player object
+            Destroy(collision.gameObject);
             gameManager.onDeath();
         }
     }

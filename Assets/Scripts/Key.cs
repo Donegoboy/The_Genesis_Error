@@ -7,7 +7,6 @@ public class Key : MonoBehaviour
 {
     public void Collect()
     {
-        // Find the player and add a key to the inventory
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {

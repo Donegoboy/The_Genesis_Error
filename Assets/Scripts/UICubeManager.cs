@@ -13,9 +13,7 @@ public class UICubeManager : MonoBehaviour
 
     public void ShowSurface(string surfaceName)
     {
-        DisableAllCubes(); // Hide all faces first
-
-        // Activate the correct face based on the provided name
+        DisableAllCubes();
         switch (surfaceName)
         {
             case "CameraA":
@@ -41,7 +39,6 @@ public class UICubeManager : MonoBehaviour
                 break;
         }
     }
-
     private void DisableAllCubes()
     {
         surfaceA.SetActive(false);

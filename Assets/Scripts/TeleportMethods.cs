@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TeleportMethods : MonoBehaviour        //Znam da moze biti bolje... :(
+public class TeleportMethods : MonoBehaviour        //Znam da je koma, ali pokusao sam smanjiti redudantnost i nije mi islo...
 {
     public static IEnumerator PerformBasicTeleport(PlayerMovement player, Teleporter teleporter, float tileSize)
     {
@@ -11,49 +11,40 @@ public class TeleportMethods : MonoBehaviour        //Znam da moze biti bolje...
         player.SetJumping(false);
         player.SetCanJump(false);
 
-        // Get the destination transform from the Teleporter script
         Transform destinationTransform = teleporter.GetDestination();
 
-        // Calculate offset based on facing direction
         Vector2 facingDirection = player.GetFacingDirection();
         Vector3 offset = Vector3.zero;
         if (facingDirection == Vector2.up)
         {
-            offset = new Vector3(0, 1, 0) * tileSize; // North
+            offset = new Vector3(0, 1, 0) * tileSize;
         }
         else if (facingDirection == Vector2.down)
         {
-            offset = new Vector3(0, -1, 0) * tileSize; // South
+            offset = new Vector3(0, -1, 0) * tileSize; 
         }
         else if (facingDirection == Vector2.left)
         {
-            offset = new Vector3(-1, 0, 0) * tileSize; // West
+            offset = new Vector3(-1, 0, 0) * tileSize; 
         }
         else if (facingDirection == Vector2.right)
         {
-            offset = new Vector3(1, 0, 0) * tileSize; // East
+            offset = new Vector3(1, 0, 0) * tileSize; 
         }
 
-        // Calculate the new position with offset
         Vector3 newPosition = destinationTransform.position + offset;
 
-        // Wait for a short duration to prevent re-triggering the teleporter
         yield return new WaitForSeconds(teleporter.teleportCooldown);
 
-        // Teleport the player to the new position
         player.transform.position = newPosition;
 
-        // Correctly snap the player's Y position to the center of the tile
         player.transform.position = new Vector3(
             player.transform.position.x,
             Mathf.Round((player.transform.position.y - tileSize / 2f) / tileSize) * tileSize + tileSize / 2f,
             player.transform.position.z
         );
 
-        // Check for holes at the new position
         player.CheckForHole();
-
-        // Reset flags after teleportation
         player.SetTeleporting(false);
         player.SetMoving(false);
         player.SetJumping(false);
@@ -66,74 +57,63 @@ public class TeleportMethods : MonoBehaviour        //Znam da moze biti bolje...
         player.SetJumping(false);
         player.SetCanJump(false);
 
-        // Get the destination transform from the Teleporter script
         Transform destinationTransform = teleporter.GetDestination();
 
-        // Calculate offset based on facing direction
         Vector2 facingDirection = player.GetFacingDirection();
         Vector3 offset = Vector3.zero;
         if (facingDirection == Vector2.up)
         {
-            offset = new Vector3(-1, 0, 0) * tileSize; // North -> West
+            offset = new Vector3(-1, 0, 0) * tileSize;
             facingDirection = Vector2.left;
         }
         else if (facingDirection == Vector2.down)
         {
-            offset = new Vector3(0, -1, 0) * tileSize; // South -> South
+            offset = new Vector3(0, -1, 0) * tileSize;
             facingDirection = Vector2.down;
         }
         else if (facingDirection == Vector2.left)
         {
-            offset = new Vector3(0, -1, 0) * tileSize; // West -> South
+            offset = new Vector3(0, -1, 0) * tileSize;
             facingDirection = Vector2.down;
         }
         else if (facingDirection == Vector2.right)
         {
-            offset = new Vector3(0, -1, 0) * tileSize; // East -> South
+            offset = new Vector3(0, -1, 0) * tileSize;
             facingDirection = Vector2.down;
         }
 
-        // Calculate the new position with offset
         Vector3 newPosition = destinationTransform.position + offset;
 
-        // Wait for a short duration to prevent re-triggering the teleporter
         yield return new WaitForSeconds(teleporter.teleportCooldown);
 
-        // Teleport the player to the new position
-        player.transform.position = newPosition; // Update player position
+        player.transform.position = newPosition; 
 
-        // Snap the player's position to the center of the tile
         player.transform.position = new Vector3(
             player.transform.position.x,
             Mathf.Round((player.transform.position.y - tileSize / 2f) / tileSize) * tileSize + tileSize / 2f,
             player.transform.position.z
         );
 
-        // Rotate the player to face the new direction
         player.SetFacingDirection(facingDirection);
 
         float targetAngle = 0;
         switch (facingDirection.x, facingDirection.y)
         {
-            case (0, 1): // Up
+            case (0, 1): 
                 targetAngle = 0;
                 break;
-            case (0, -1): // Down
+            case (0, -1):
                 targetAngle = 180;
                 break;
-            case (-1, 0): // Left
+            case (-1, 0):
                 targetAngle = -90;
                 break;
-            case (1, 0): // Right
+            case (1, 0): 
                 targetAngle = 90;
                 break;
         }
         player.SetTargetRotation(Quaternion.Euler(0, 0, targetAngle));
-
-        // Check for holes at the new position
         player.CheckForHole();
-
-        // Reset flags after teleportation
         player.SetTeleporting(false);
         player.SetMoving(false);
         player.SetJumping(false);
@@ -147,73 +127,62 @@ public class TeleportMethods : MonoBehaviour        //Znam da moze biti bolje...
         player.SetJumping(false);
         player.SetCanJump(false);
 
-        // Get the destination transform from the Teleporter script
         Transform destinationTransform = teleporter.GetDestination();
 
-        // Calculate offset based on facing direction
         Vector2 facingDirection = player.GetFacingDirection();
         Vector3 offset = Vector3.zero;
         if (facingDirection == Vector2.up)
         {
-            offset = new Vector3(0, +1, 0) * tileSize; // North -> North
+            offset = new Vector3(0, +1, 0) * tileSize; 
             facingDirection = Vector2.up;
         }
         else if (facingDirection == Vector2.down)
         {
-            offset = new Vector3(0, +1, 0) * tileSize; // South -> North
+            offset = new Vector3(0, +1, 0) * tileSize; 
             facingDirection = Vector2.up;
         }
         else if (facingDirection == Vector2.left)
         {
-            offset = new Vector3(0, -1, 0) * tileSize; // West -> South
+            offset = new Vector3(0, -1, 0) * tileSize; 
             facingDirection = Vector2.down;
         }
         else if (facingDirection == Vector2.right)
         {
-            offset = new Vector3(0, -1, 0) * tileSize; // East -> South
+            offset = new Vector3(0, -1, 0) * tileSize;
             facingDirection = Vector2.down;
         }
 
-        // Calculate the new position with offset
         Vector3 newPosition = destinationTransform.position + offset;
-
-        // Wait for a short duration to prevent re-triggering the teleporter
         yield return new WaitForSeconds(teleporter.teleportCooldown);
 
-        // Teleport the player to the new position
         player.transform.position = newPosition;
-
-        // Correctly snap the player's Y position to the center of the tile
         player.transform.position = new Vector3(
             player.transform.position.x,
             Mathf.Round((player.transform.position.y - tileSize / 2f) / tileSize) * tileSize + tileSize / 2f,
             player.transform.position.z
         );
 
-        // Rotate the player to face the new direction
         player.SetFacingDirection(facingDirection);
         float targetAngle = 0f;
         switch (facingDirection.x, facingDirection.y)
         {
-            case (0, 1):  // Up
+            case (0, 1): 
                 targetAngle = 0;
                 break;
-            case (0, -1): // Down
+            case (0, -1):
                 targetAngle = 180;
                 break;
-            case (-1, 0): // Left
+            case (-1, 0): 
                 targetAngle = -90;
                 break;
-            case (1, 0):  // Right
+            case (1, 0):
                 targetAngle = 90;
                 break;
         }
         player.SetTargetRotation(Quaternion.Euler(0, 0, targetAngle));
 
-        // Check for holes at the new position
-        player.CheckForHole();
 
-        // Reset flags after teleportation
+        player.CheckForHole();
         player.SetTeleporting(false);
         player.SetMoving(false);
         player.SetJumping(false);
@@ -227,78 +196,67 @@ public class TeleportMethods : MonoBehaviour        //Znam da moze biti bolje...
         player.SetJumping(false);
         player.SetCanJump(false);
 
-        // Get the destination transform from the Teleporter script
         Transform destinationTransform = teleporter.GetDestination();
-
-        // Calculate offset based on facing direction
-        Vector2 facingDirection = player.GetFacingDirection(); // Access through player object
+        Vector2 facingDirection = player.GetFacingDirection(); 
         Vector3 offset = Vector3.zero;
+
         if (facingDirection == Vector2.up)
         {
-            offset = new Vector3(0, -1, 0) * tileSize; // North -> South
-            facingDirection = Vector2.down; // Face South after teleporting
+            offset = new Vector3(0, -1, 0) * tileSize;
+            facingDirection = Vector2.down;
         }
         else if (facingDirection == Vector2.down)
         {
-            offset = new Vector3(0, -1, 0) * tileSize; // South -> South
-            facingDirection = Vector2.down; // Face South after teleporting
+            offset = new Vector3(0, -1, 0) * tileSize;
+            facingDirection = Vector2.down;
         }
         else if (facingDirection == Vector2.left)
         {
-            offset = new Vector3(0, -1, 0) * tileSize; // West -> South
-            facingDirection = Vector2.down; // Face South after teleporting
+            offset = new Vector3(0, -1, 0) * tileSize;
+            facingDirection = Vector2.down; 
         }
         else if (facingDirection == Vector2.right)
         {
-            offset = new Vector3(0, -1, 0) * tileSize; // East -> South
-            facingDirection = Vector2.down; // Face South after teleporting
+            offset = new Vector3(0, -1, 0) * tileSize;
+            facingDirection = Vector2.down;
         }
 
-        // Calculate the new position with offset
         Vector3 newPosition = destinationTransform.position + offset;
-
-        // Wait for a short duration to prevent re-triggering the teleporter
         yield return new WaitForSeconds(teleporter.teleportCooldown);
+        player.transform.position = newPosition;
 
-        // Teleport the player to the new position
-        player.transform.position = newPosition; // Access through player object
-
-        // Snap the player's position to the center of the tile
-        player.transform.position = new Vector3( // Access through player object
+        player.transform.position = new Vector3(
             player.transform.position.x,
             Mathf.Round((player.transform.position.y - tileSize / 2f) / tileSize) * tileSize + tileSize / 2f,
             player.transform.position.z
         );
 
-        player.transform.position = new Vector3( // Access through player object
+        player.transform.position = new Vector3(
             Mathf.Round((player.transform.position.x - tileSize / 2f) / tileSize) * tileSize + tileSize / 2f,
             player.transform.position.y,
             player.transform.position.z
         );
 
-        // Rotate the player to face the new direction
-        player.SetFacingDirection(facingDirection); // Use the updated facingDirection
+        player.SetFacingDirection(facingDirection);
         float targetAngle = 0;
-        switch (player.GetFacingDirection().x, player.GetFacingDirection().y) // Access through player
+        switch (player.GetFacingDirection().x, player.GetFacingDirection().y)
         {
-            case (0, 1):  // Up
+            case (0, 1):
                 targetAngle = 0;
                 break;
-            case (0, -1): // Down
+            case (0, -1):
                 targetAngle = 180;
                 break;
-            case (-1, 0): // Left
+            case (-1, 0):
                 targetAngle = -90;
                 break;
-            case (1, 0):  // Right
+            case (1, 0):
                 targetAngle = 90;
                 break;
         }
-        player.SetTargetRotation(Quaternion.Euler(0, 0, targetAngle)); // Access through player object
-        // Check for holes at the new position
+        player.SetTargetRotation(Quaternion.Euler(0, 0, targetAngle));
         player.CheckForHole();
 
-        // Reset flags after teleportation
         player.SetTeleporting(false);
         player.SetMoving(false);
         player.SetJumping(false);
@@ -312,74 +270,57 @@ public class TeleportMethods : MonoBehaviour        //Znam da moze biti bolje...
         player.SetJumping(false);
         player.SetCanJump(false);
 
-        // Get the destination transform from the Teleporter script
         Transform destinationTransform = teleporter.GetDestination();
-
-        // Calculate offset based on facing direction
-        Vector2 facingDirection = player.GetFacingDirection(); // Access through player object
+        Vector2 facingDirection = player.GetFacingDirection(); 
         Vector3 offset = Vector3.zero;
 
-        // Since this is for left/right movement only, we only care about those directions
         if (facingDirection == Vector2.left)
         {
-            offset = new Vector3(-1, 0, 0) * tileSize; // West
-            facingDirection = Vector2.left; // Face West after teleporting
+            offset = new Vector3(-1, 0, 0) * tileSize;
+            facingDirection = Vector2.left;
         }
         else if (facingDirection == Vector2.right)
         {
-            offset = new Vector3(1, 0, 0) * tileSize; // East
-            facingDirection = Vector2.right; // Face East after teleporting
+            offset = new Vector3(1, 0, 0) * tileSize;
+            facingDirection = Vector2.right;
         }
 
-        // Calculate the new position with offset
         Vector3 newPosition = destinationTransform.position + offset;
-
-        // Wait for a short duration to prevent re-triggering the teleporter
         yield return new WaitForSeconds(teleporter.teleportCooldown);
+        player.transform.position = newPosition;
 
-        // Teleport the player to the new position
-        player.transform.position = newPosition; // Access through player object
-
-        // Snap the player's position to the center of the tile
-        player.transform.position = new Vector3( // Access through player object
+        player.transform.position = new Vector3(
             player.transform.position.x,
             Mathf.Round((player.transform.position.y - tileSize / 2f) / tileSize) * tileSize + tileSize / 2f,
             player.transform.position.z
         );
 
-        player.transform.position = new Vector3( // Access through player object
+        player.transform.position = new Vector3(
             Mathf.Round((player.transform.position.x - tileSize / 2f) / tileSize) * tileSize + tileSize / 2f,
             player.transform.position.y,
             player.transform.position.z
         );
 
-        // Rotate the player to face the new direction
-        player.SetFacingDirection(facingDirection);  // Update facing direction
+        player.SetFacingDirection(facingDirection);
         float targetAngle = 0;
-        switch (player.GetFacingDirection().x, player.GetFacingDirection().y) // Access through player object
+        switch (player.GetFacingDirection().x, player.GetFacingDirection().y)
         {
-            case (0, 1):  // Up
+            case (0, 1):
                 targetAngle = 0;
                 break;
-            case (0, -1): // Down
+            case (0, -1):
                 targetAngle = 180;
                 break;
-            case (-1, 0): // Left
+            case (-1, 0):
                 targetAngle = -90;
                 break;
-            case (1, 0):  // Right
+            case (1, 0):
                 targetAngle = 90;
                 break;
         }
-        player.SetTargetRotation(Quaternion.Euler(0, 0, targetAngle)); // Access through player object
-
-        // Remove the following line (it's likely not needed):
-        // player.transform.rotation = player.GetTargetRotation();
-
-        // Check for holes at the new position
+        player.SetTargetRotation(Quaternion.Euler(0, 0, targetAngle));
         player.CheckForHole();
 
-        // Reset flags after teleportation
         player.SetTeleporting(false);
         player.SetMoving(false);
         player.SetJumping(false);
@@ -393,82 +334,67 @@ public class TeleportMethods : MonoBehaviour        //Znam da moze biti bolje...
         player.SetJumping(false);
         player.SetCanJump(false);
 
-        // Get the destination transform from the Teleporter script
         Transform destinationTransform = teleporter.GetDestination();
-
-        // Calculate offset based on facing direction
-        Vector2 facingDirection = player.GetFacingDirection(); // Access through player
+        Vector2 facingDirection = player.GetFacingDirection();
         Vector3 offset = Vector3.zero;
+
         if (facingDirection == Vector2.up)
         {
-            offset = new Vector3(0, 1, 0) * tileSize; // North
-            facingDirection = Vector2.up; // Face North after teleporting
+            offset = new Vector3(0, 1, 0) * tileSize;
+            facingDirection = Vector2.up;
         }
         else if (facingDirection == Vector2.down)
         {
-            offset = new Vector3(0, -1, 0) * tileSize; // South
-            facingDirection = Vector2.down; // Face South after teleporting
+            offset = new Vector3(0, -1, 0) * tileSize;
+            facingDirection = Vector2.down;
         }
         else if (facingDirection == Vector2.left)
         {
-            offset = new Vector3(-1, 0, 0) * tileSize; // West
-            facingDirection = Vector2.left; // Face West after teleporting
+            offset = new Vector3(-1, 0, 0) * tileSize;
+            facingDirection = Vector2.left;
         }
         else if (facingDirection == Vector2.right)
         {
-            offset = new Vector3(1, 0, 0) * tileSize; // East
-            facingDirection = Vector2.right; // Face East after teleporting
+            offset = new Vector3(1, 0, 0) * tileSize;
+            facingDirection = Vector2.right;
         }
 
-        // Calculate the new position with offset
         Vector3 newPosition = destinationTransform.position + offset;
-
-        // Wait for a short duration to prevent re-triggering the teleporter
         yield return new WaitForSeconds(teleporter.teleportCooldown);
+        player.transform.position = newPosition;
 
-        // Teleport the player to the new position
-        player.transform.position = newPosition; // Access through player
-
-        // Snap the player's position to the center of the tile
-        player.transform.position = new Vector3( // Access through player
+        player.transform.position = new Vector3( 
             player.transform.position.x,
             Mathf.Round((player.transform.position.y - tileSize / 2f) / tileSize) * tileSize + tileSize / 2f,
             player.transform.position.z
         );
 
-        player.transform.position = new Vector3( // Access through player
+        player.transform.position = new Vector3(
             Mathf.Round((player.transform.position.x - tileSize / 2f) / tileSize) * tileSize + tileSize / 2f,
             player.transform.position.y,
             player.transform.position.z
         );
 
-        // Rotate the player to face the new direction
-        player.SetFacingDirection(facingDirection); // Update facing direction
+        player.SetFacingDirection(facingDirection);
         float targetAngle = 0;
-        switch (player.GetFacingDirection().x, player.GetFacingDirection().y) // Access through player
+        switch (player.GetFacingDirection().x, player.GetFacingDirection().y)
         {
-            case (0, 1):  // Up
+            case (0, 1):
                 targetAngle = 0;
                 break;
-            case (0, -1): // Down
+            case (0, -1):
                 targetAngle = 180;
                 break;
-            case (-1, 0): // Left
+            case (-1, 0):
                 targetAngle = -90;
                 break;
-            case (1, 0):  // Right
+            case (1, 0):
                 targetAngle = 90;
                 break;
         }
-        player.SetTargetRotation(Quaternion.Euler(0, 0, targetAngle)); // Access through player
-
-        // Remove the following line (it's likely not needed):
-        // transform.rotation = player.targetRotation;
-
-        // Check for holes at the new position
+        player.SetTargetRotation(Quaternion.Euler(0, 0, targetAngle));
         player.CheckForHole();
 
-        // Reset flags after teleportation
         player.SetTeleporting(false);
         player.SetMoving(false);
         player.SetJumping(false);
@@ -482,82 +408,67 @@ public class TeleportMethods : MonoBehaviour        //Znam da moze biti bolje...
         player.SetJumping(false);
         player.SetCanJump(false);
 
-        // Get the destination transform from the Teleporter script
         Transform destinationTransform = teleporter.GetDestination();
-
-        // Calculate offset based on facing direction
-        Vector2 facingDirection = player.GetFacingDirection(); // Access through player
+        Vector2 facingDirection = player.GetFacingDirection();
         Vector3 offset = Vector3.zero;
+
         if (facingDirection == Vector2.up)
         {
-            offset = new Vector3(-1, 0, 0) * tileSize; // North -> West
-            facingDirection = Vector2.left; // Face West after teleporting
+            offset = new Vector3(-1, 0, 0) * tileSize;
+            facingDirection = Vector2.left;
         }
         else if (facingDirection == Vector2.down)
         {
-            offset = new Vector3(-1, 0, 0) * tileSize; // South -> West
-            facingDirection = Vector2.left; // Face West after teleporting
+            offset = new Vector3(-1, 0, 0) * tileSize; 
+            facingDirection = Vector2.left;
         }
         else if (facingDirection == Vector2.left)
         {
-            offset = new Vector3(0, -1, 0) * tileSize; // West -> South
-            facingDirection = Vector2.down; // Face South after teleporting
+            offset = new Vector3(0, -1, 0) * tileSize;
+            facingDirection = Vector2.down;
         }
         else if (facingDirection == Vector2.right)
         {
-            offset = new Vector3(0, 1, 0) * tileSize; // East -> North
-            facingDirection = Vector2.up; // Face North after teleporting
+            offset = new Vector3(0, 1, 0) * tileSize; 
+            facingDirection = Vector2.up;
         }
 
-        // Calculate the new position with offset
         Vector3 newPosition = destinationTransform.position + offset;
-
-        // Wait for a short duration to prevent re-triggering the teleporter
         yield return new WaitForSeconds(teleporter.teleportCooldown);
+        player.transform.position = newPosition; 
 
-        // Teleport the player to the new position
-        player.transform.position = newPosition; // Access through player
-
-        // Snap the player's position to the center of the tile
-        player.transform.position = new Vector3( // Access through player
+        player.transform.position = new Vector3( 
             player.transform.position.x,
             Mathf.Round((player.transform.position.y - tileSize / 2f) / tileSize) * tileSize + tileSize / 2f,
             player.transform.position.z
         );
 
-        player.transform.position = new Vector3( // Access through player
+        player.transform.position = new Vector3(
             Mathf.Round((player.transform.position.x - tileSize / 2f) / tileSize) * tileSize + tileSize / 2f,
             player.transform.position.y,
             player.transform.position.z
         );
 
-        // Rotate the player to face the new direction
-        player.SetFacingDirection(facingDirection); // Update facing direction
+        player.SetFacingDirection(facingDirection);
         float targetAngle = 0;
-        switch (player.GetFacingDirection().x, player.GetFacingDirection().y) // Access through player
+        switch (player.GetFacingDirection().x, player.GetFacingDirection().y)
         {
-            case (0, 1):  // Up
+            case (0, 1):
                 targetAngle = 0;
                 break;
-            case (0, -1): // Down
+            case (0, -1):
                 targetAngle = 180;
                 break;
-            case (-1, 0): // Left
+            case (-1, 0):
                 targetAngle = -90;
                 break;
-            case (1, 0):  // Right
+            case (1, 0):
                 targetAngle = 90;
                 break;
         }
-        player.SetTargetRotation(Quaternion.Euler(0, 0, targetAngle)); // Access through player
-
-        // Remove the following line (it's likely not needed):
-        // transform.rotation = player.targetRotation;
-
-        // Check for holes at the new position
+        player.SetTargetRotation(Quaternion.Euler(0, 0, targetAngle));
         player.CheckForHole();
 
-        // Reset flags after teleportation
         player.SetTeleporting(false);
         player.SetMoving(false);
         player.SetJumping(false);
@@ -571,82 +482,68 @@ public class TeleportMethods : MonoBehaviour        //Znam da moze biti bolje...
         player.SetJumping(false);
         player.SetCanJump(false);
 
-        // Get the destination transform from the Teleporter script
         Transform destinationTransform = teleporter.GetDestination();
-
-        // Calculate offset based on facing direction
-        Vector2 facingDirection = player.GetFacingDirection(); // Access through player
+        Vector2 facingDirection = player.GetFacingDirection();
         Vector3 offset = Vector3.zero;
+
         if (facingDirection == Vector2.up)
         {
-            offset = new Vector3(0, 0, 0) * tileSize; // North -> No movement
-            facingDirection = Vector2.up; // Remains facing North
+            offset = new Vector3(0, 0, 0) * tileSize;
+            facingDirection = Vector2.up;
         }
         else if (facingDirection == Vector2.down)
         {
-            offset = new Vector3(1, 0, 0) * tileSize; // South -> East
-            facingDirection = Vector2.right; // Face East after teleporting
+            offset = new Vector3(1, 0, 0) * tileSize;
+            facingDirection = Vector2.right;
         }
         else if (facingDirection == Vector2.left)
         {
-            offset = new Vector3(0, 1, 0) * tileSize; // West -> North
-            facingDirection = Vector2.up; // Face North after teleporting
+            offset = new Vector3(0, 1, 0) * tileSize;
+            facingDirection = Vector2.up;
         }
         else if (facingDirection == Vector2.right)
         {
-            offset = new Vector3(0, -1, 0) * tileSize; // East -> South
-            facingDirection = Vector2.down; // Face South after teleporting
+            offset = new Vector3(0, -1, 0) * tileSize;
+            facingDirection = Vector2.down;
         }
 
-        // Calculate the new position with offset
         Vector3 newPosition = destinationTransform.position + offset;
-
-        // Wait for a short duration to prevent re-triggering the teleporter
         yield return new WaitForSeconds(teleporter.teleportCooldown);
+        player.transform.position = newPosition;
 
-        // Teleport the player to the new position
-        player.transform.position = newPosition; // Access through player
-
-        // Snap the player's position to the center of the tile
-        player.transform.position = new Vector3( // Access through player
+ 
+        player.transform.position = new Vector3(
             player.transform.position.x,
             Mathf.Round((player.transform.position.y - tileSize / 2f) / tileSize) * tileSize + tileSize / 2f,
             player.transform.position.z
         );
 
-        player.transform.position = new Vector3( // Access through player
+        player.transform.position = new Vector3(
             Mathf.Round((player.transform.position.x - tileSize / 2f) / tileSize) * tileSize + tileSize / 2f,
             player.transform.position.y,
             player.transform.position.z
         );
 
-        // Rotate the player to face the new direction
-        player.SetFacingDirection(facingDirection); // Update facing direction
+        player.SetFacingDirection(facingDirection);
         float targetAngle = 0;
-        switch (player.GetFacingDirection().x, player.GetFacingDirection().y) // Access through player
+        switch (player.GetFacingDirection().x, player.GetFacingDirection().y)
         {
-            case (0, 1):  // Up
+            case (0, 1):
                 targetAngle = 0;
                 break;
-            case (0, -1): // Down
+            case (0, -1):
                 targetAngle = 180;
                 break;
-            case (-1, 0): // Left
+            case (-1, 0):
                 targetAngle = -90;
                 break;
-            case (1, 0):  // Right
+            case (1, 0):
                 targetAngle = 90;
                 break;
         }
-        player.SetTargetRotation(Quaternion.Euler(0, 0, targetAngle)); // Access through player
-
-        // Remove the following line (it's likely not needed):
-        // transform.rotation = player.targetRotation;
-
-        // Check for holes at the new position
+        player.SetTargetRotation(Quaternion.Euler(0, 0, targetAngle));
         player.CheckForHole();
 
-        // Reset flags after teleportation
         player.SetTeleporting(false);
         player.SetMoving(false);
         player.SetJumping(false);
@@ -660,82 +557,67 @@ public class TeleportMethods : MonoBehaviour        //Znam da moze biti bolje...
         player.SetJumping(false);
         player.SetCanJump(false);
 
-        // Get the destination transform from the Teleporter script
         Transform destinationTransform = teleporter.GetDestination();
-
-        // Calculate offset based on facing direction
-        Vector2 facingDirection = player.GetFacingDirection(); // Access through player
+        Vector2 facingDirection = player.GetFacingDirection();
         Vector3 offset = Vector3.zero;
+
         if (facingDirection == Vector2.up)
         {
-            offset = new Vector3(1, 0, 0) * tileSize; // North -> East
-            facingDirection = Vector2.right; // Face East after teleporting
+            offset = new Vector3(1, 0, 0) * tileSize; 
+            facingDirection = Vector2.right;
         }
         else if (facingDirection == Vector2.down)
         {
-            offset = new Vector3(0, 1, 0) * tileSize; // South -> North
-            facingDirection = Vector2.up; // Face North after teleporting
+            offset = new Vector3(0, 1, 0) * tileSize;
+            facingDirection = Vector2.up;
         }
         else if (facingDirection == Vector2.left)
         {
-            offset = new Vector3(0, -1, 0) * tileSize; // West -> South
-            facingDirection = Vector2.down; // Face South after teleporting
+            offset = new Vector3(0, -1, 0) * tileSize;
+            facingDirection = Vector2.down;
         }
         else if (facingDirection == Vector2.right)
         {
-            offset = new Vector3(0, -1, 0) * tileSize; // East -> South
-            facingDirection = Vector2.down; // Face South after teleporting
+            offset = new Vector3(0, -1, 0) * tileSize;
+            facingDirection = Vector2.down;
         }
 
-        // Calculate the new position with offset
         Vector3 newPosition = destinationTransform.position + offset;
-
-        // Wait for a short duration to prevent re-triggering the teleporter
         yield return new WaitForSeconds(teleporter.teleportCooldown);
+        player.transform.position = newPosition;
 
-        // Teleport the player to the new position
-        player.transform.position = newPosition; // Access through player
-
-        // Snap the player's position to the center of the tile
-        player.transform.position = new Vector3( // Access through player
+        player.transform.position = new Vector3(
             player.transform.position.x,
             Mathf.Round((player.transform.position.y - tileSize / 2f) / tileSize) * tileSize + tileSize / 2f,
             player.transform.position.z
         );
 
-        player.transform.position = new Vector3( // Access through player
+        player.transform.position = new Vector3(
             Mathf.Round((player.transform.position.x - tileSize / 2f) / tileSize) * tileSize + tileSize / 2f,
             player.transform.position.y,
             player.transform.position.z
         );
 
-        // Rotate the player to face the new direction
-        player.SetFacingDirection(facingDirection); // Update facing direction
+        player.SetFacingDirection(facingDirection);
         float targetAngle = 0;
-        switch (player.GetFacingDirection().x, player.GetFacingDirection().y) // Access through player
+        switch (player.GetFacingDirection().x, player.GetFacingDirection().y)
         {
-            case (0, 1):  // Up
+            case (0, 1):
                 targetAngle = 0;
                 break;
-            case (0, -1): // Down
+            case (0, -1): 
                 targetAngle = 180;
                 break;
-            case (-1, 0): // Left
+            case (-1, 0): 
                 targetAngle = -90;
                 break;
-            case (1, 0):  // Right
+            case (1, 0): 
                 targetAngle = 90;
                 break;
         }
-        player.SetTargetRotation(Quaternion.Euler(0, 0, targetAngle)); // Access through player
-
-        // Remove the following line (it's likely not needed):
-        // transform.rotation = player.targetRotation;
-
-        // Check for holes at the new position
+        player.SetTargetRotation(Quaternion.Euler(0, 0, targetAngle)); 
         player.CheckForHole();
 
-        // Reset flags after teleportation
         player.SetTeleporting(false);
         player.SetMoving(false);
         player.SetJumping(false);
