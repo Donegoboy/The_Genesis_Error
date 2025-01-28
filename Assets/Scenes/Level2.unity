@@ -3726,7 +3726,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLocked: 1
-  unlockedSprite: {fileID: -852250494, guid: b876e9efe4e0d5d4d9cb6a859f3c3f67, type: 3}
+  unlockSprite: {fileID: 0}
 --- !u!61 &104216597
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -11174,6 +11174,72 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &297516948
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 484184375}
+    m_Modifications:
+    - target: {fileID: 2186135731139315453, guid: 91cc62c83d2ace7479dc1c7cc1c6bff4, type: 3}
+      propertyPath: m_Name
+      value: Spikes
+      objectReference: {fileID: 0}
+    - target: {fileID: 4226701155036805840, guid: 91cc62c83d2ace7479dc1c7cc1c6bff4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4226701155036805840, guid: 91cc62c83d2ace7479dc1c7cc1c6bff4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4226701155036805840, guid: 91cc62c83d2ace7479dc1c7cc1c6bff4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4226701155036805840, guid: 91cc62c83d2ace7479dc1c7cc1c6bff4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4226701155036805840, guid: 91cc62c83d2ace7479dc1c7cc1c6bff4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4226701155036805840, guid: 91cc62c83d2ace7479dc1c7cc1c6bff4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4226701155036805840, guid: 91cc62c83d2ace7479dc1c7cc1c6bff4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4226701155036805840, guid: 91cc62c83d2ace7479dc1c7cc1c6bff4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4226701155036805840, guid: 91cc62c83d2ace7479dc1c7cc1c6bff4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4226701155036805840, guid: 91cc62c83d2ace7479dc1c7cc1c6bff4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6843231614386540841, guid: 91cc62c83d2ace7479dc1c7cc1c6bff4, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 91cc62c83d2ace7479dc1c7cc1c6bff4, type: 3}
+--- !u!4 &297516949 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4226701155036805840, guid: 91cc62c83d2ace7479dc1c7cc1c6bff4, type: 3}
+  m_PrefabInstance: {fileID: 297516948}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &298139478 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1254019330949599446, guid: e0d4999dd3c67b24e97c274d28f322a2, type: 3}
@@ -17492,6 +17558,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6199857770781533256, guid: a78f6df1c4b121e4b84511809f66f17f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1629168780}
+    - targetCorrespondingSourceObject: {fileID: 6199857770781533256, guid: a78f6df1c4b121e4b84511809f66f17f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 297516949}
     - targetCorrespondingSourceObject: {fileID: 6199857770781533256, guid: a78f6df1c4b121e4b84511809f66f17f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 159797606}
@@ -50835,6 +50904,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMenuScene: MainMenu
   levelScene: SampleScene
+  levelScene2: Level2
   levelSelection: LevelSelection
   pauseMenuPanel: {fileID: 159608867}
   levelCompletionPanel: {fileID: 1973401286}
@@ -60452,7 +60522,6 @@ MonoBehaviour:
   Camera4: {fileID: 1021807307}
   Camera5: {fileID: 1330382413}
   Camera6: {fileID: 278482382}
-  rotationSpeed: 720
 --- !u!4 &2112230845 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 985719415706047207, guid: 6f93ea5aa2a4401458a56dba97eafa4a, type: 3}

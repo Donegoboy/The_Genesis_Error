@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private string mainMenuScene = "MainMenu";
     [SerializeField] private string levelScene = "Level";
+    [SerializeField] private string levelScene2 = "Level2";
     [SerializeField] private string levelSelection = "LevelSelection";
     [SerializeField] private GameObject pauseMenuPanel;
     [SerializeField] private GameObject levelCompletionPanel;
@@ -164,11 +165,14 @@ public class GameManager : MonoBehaviour
 
 
     public void toLevel()
+    {
+        SceneManager.LoadScene(levelScene);
+    }
+
+    public void toLevel2()
 
     {
-
-        SceneManager.LoadScene(levelScene);
-
+        SceneManager.LoadScene(levelScene2);
     }
 
 
