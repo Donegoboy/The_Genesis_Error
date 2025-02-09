@@ -503,7 +503,7 @@ public class TeleportMethods : MonoBehaviour        //Znam da je koma, ali pokus
         }
         else if (facingDirection == Vector2.right)
         {
-            offset = new Vector3(0, -1, 0) * tileSize;
+            offset = new Vector3(0, 1, 0) * tileSize;
             facingDirection = Vector2.down;
         }
 
