@@ -78,14 +78,14 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: eb2576b69da6f9b42926e0fab4e9817a, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.9137255}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 42.666668, y: 42.666668}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!50 &5039969987730679202
@@ -196,9 +196,38 @@ MonoBehaviour:
   moveSpeed: 5
   tileSize: 1
   jumpDistance: 2
+  jumpDuration: 0.5
+  rotationSpeed: 720
   surfaceLayer:
     serializedVersion: 2
     m_Bits: 8
   holeLayer:
     serializedVersion: 2
     m_Bits: 0
+  teleporterLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  collisionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  playerJumpCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  isJumping: 0
+  facingDirection: {x: 0, y: 1}
+  isMoving: 0
+  canJump: 1
+  targetRotation: {x: 0, y: 0, z: 0, w: 0}
+  onDeathVFXPrefab: {fileID: 0}
+  normalScale: {x: 1, y: 1, z: 1}
+  jumpScale: {x: 1.2, y: 0.8, z: 1.2}
+  scaleCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  isTeleporting: 0
