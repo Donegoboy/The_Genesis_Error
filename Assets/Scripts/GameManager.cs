@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,8 +9,9 @@ using UnityEngine.SocialPlatforms;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private string mainMenuScene = "MainMenu";
-    [SerializeField] private string levelScene = "Level";
+    [SerializeField] private string levelScene = "Level1";
     [SerializeField] private string levelScene2 = "Level2";
+    [SerializeField] private string levelScene3 = "Level3";
     [SerializeField] private string levelSelection = "LevelSelection";
     [SerializeField] private GameObject pauseMenuPanel;
     [SerializeField] private GameObject levelCompletionPanel;
@@ -17,6 +19,8 @@ public class GameManager : MonoBehaviour
 
     private bool isPaused = false;
     private string levelName;
+
+    public int levelsCompleted = 0;
 
     private void Update()
     {
@@ -31,6 +35,11 @@ public class GameManager : MonoBehaviour
                 Pause();
             }
         }
+    }
+
+    private void Awake()
+    {
+        levelsCompleted = PlayerPrefs.GetInt("Counter", 0);
     }
 
     private string currentSceneName;
@@ -72,24 +81,11 @@ public class GameManager : MonoBehaviour
         }
 
     }
-
-
-
     public void LevelCompleted()
-
     {
-
-        Debug.Log("LevelCompleted() called - about to activate panel");
-
-
-
         levelCompletionPanel.SetActive(true);
-
-
-
-        Debug.Log("LevelCompleted() - panel should be active");
-
-
+        levelsCompleted++;
+        SaveLevelsCompleted();
 
         Time.timeScale = 1f;
 
@@ -97,21 +93,20 @@ public class GameManager : MonoBehaviour
 
     }
 
-
+    private void SaveLevelsCompleted()
+    {
+        PlayerPrefs.SetInt("Countervalue", levelsCompleted);
+        PlayerPrefs.Save();
+    }
 
     public void Pause()
-
     {
-
         Time.timeScale = 0f;
 
         pauseMenuPanel.SetActive(true);
 
         isPaused = true;
-
     }
-
-
 
     public void Start()
 
@@ -120,62 +115,43 @@ public class GameManager : MonoBehaviour
         levelName = SceneManager.GetActiveScene().name;
 
     }
-
-
-
     public void Resume()
-
     {
-
         Time.timeScale = 1f;
 
         pauseMenuPanel.SetActive(false);
 
         isPaused = false;
-
     }
 
-
-
     public void ToMainMenu()
-
     {
-
         Time.timeScale = 1f;
 
         SceneManager.LoadScene(mainMenuScene);
-
     }
-
-
-
     public void ToLevelSelection()
-
     {
-
         SceneManager.LoadScene(levelSelection);
 
         Time.timeScale = 1f;
-
     }
-
-
-
     public void toLevel()
     {
         SceneManager.LoadScene(levelScene);
     }
-
     public void toLevel2()
-
     {
         SceneManager.LoadScene(levelScene2);
+
     }
 
-
+    public void toLevel3()
+    {
+        SceneManager.LoadScene(levelScene3);
+    }
 
     public void Quit()
-
     {
 
 #if UNITY_EDITOR
