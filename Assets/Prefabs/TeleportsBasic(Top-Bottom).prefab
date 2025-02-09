@@ -136,6 +136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 0}
   teleportCooldown: 0.2
+  teleportSfx: {fileID: 8300000, guid: d8b404d96834d4348a99e47a24228532, type: 3}
 --- !u!4 &6872585037681176936 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6676047387127264917, guid: 1c0230cb2fd816c41ac450f06fb25abc, type: 3}
@@ -236,6 +237,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 0}
   teleportCooldown: 0.2
+  teleportSfx: {fileID: 8300000, guid: d8b404d96834d4348a99e47a24228532, type: 3}
 --- !u!4 &4812723402915524486 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6676047387127264917, guid: 1c0230cb2fd816c41ac450f06fb25abc, type: 3}
@@ -336,6 +338,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 0}
   teleportCooldown: 0.2
+  teleportSfx: {fileID: 8300000, guid: d8b404d96834d4348a99e47a24228532, type: 3}
 --- !u!4 &7480560925175510562 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6676047387127264917, guid: 1c0230cb2fd816c41ac450f06fb25abc, type: 3}
@@ -436,6 +439,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 0}
   teleportCooldown: 0.2
+  teleportSfx: {fileID: 8300000, guid: d8b404d96834d4348a99e47a24228532, type: 3}
 --- !u!4 &6943755660485712958 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6676047387127264917, guid: 1c0230cb2fd816c41ac450f06fb25abc, type: 3}
@@ -541,6 +545,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 0}
   teleportCooldown: 0.2
+  teleportSfx: {fileID: 8300000, guid: d8b404d96834d4348a99e47a24228532, type: 3}
 --- !u!1001 &5869181561871798721
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -641,6 +646,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 0}
   teleportCooldown: 0.2
+  teleportSfx: {fileID: 8300000, guid: d8b404d96834d4348a99e47a24228532, type: 3}
 --- !u!1001 &6154478775366025449
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -741,6 +747,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 0}
   teleportCooldown: 0.2
+  teleportSfx: {fileID: 8300000, guid: d8b404d96834d4348a99e47a24228532, type: 3}
 --- !u!1001 &6349520267309845544
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -841,6 +848,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 0}
   teleportCooldown: 0.2
+  teleportSfx: {fileID: 8300000, guid: d8b404d96834d4348a99e47a24228532, type: 3}
 --- !u!1001 &8091855620542291136
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -941,6 +949,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 0}
   teleportCooldown: 0.2
+  teleportSfx: {fileID: 8300000, guid: d8b404d96834d4348a99e47a24228532, type: 3}
 --- !u!1001 &8554307123494272015
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1041,3 +1050,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 0}
   teleportCooldown: 0.2
+  teleportSfx: {fileID: 8300000, guid: d8b404d96834d4348a99e47a24228532, type: 3}

@@ -5,13 +5,25 @@ using UnityEngine;
 
 public class Key : MonoBehaviour
 {
-    public GameObject keyCollectVFXPrefab; // Drag your "Hit_02" prefab here in the Inspector
+    public GameObject keyCollectVFXPrefab;
+    public AudioClip keyCollectSFX;
 
     public void Collect()
     {
-        Debug.Log("Key's Collect() method called!");
+        if (keyCollectSFX != null)
+        {
+            GameObject soundObject = new GameObject("KeySFX");
+            soundObject.transform.position = transform.position;
 
-        // Find the player and add a key to the inventory
+            AudioSource audioSource = soundObject.AddComponent<AudioSource>();
+            audioSource.clip = keyCollectSFX;
+            audioSource.spatialBlend = 0f;
+            audioSource.pitch = 2.5f;
+            audioSource.Play();
+            Destroy(soundObject, audioSource.clip.length);
+        }
+
+
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
@@ -19,17 +31,13 @@ public class Key : MonoBehaviour
             if (inventory != null)
             {
                 inventory.AddKey();
-                Debug.Log("Key added to inventory");
             }
         }
 
-        // Instantiate the VFX prefab at the key's position
         if (keyCollectVFXPrefab != null)
         {
             Instantiate(keyCollectVFXPrefab, transform.position, Quaternion.identity);
         }
-
-        // Destroy the key after it's collected
         Destroy(gameObject);
     }
 }

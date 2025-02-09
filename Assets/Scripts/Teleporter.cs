@@ -10,6 +10,7 @@ public class Teleporter : MonoBehaviour
     private bool canTeleport = true;
 
     private TeleportManager teleportManager;
+    public AudioClip teleportSfx;
 
     private void Start()
     {
@@ -25,6 +26,19 @@ public class Teleporter : MonoBehaviour
     {
         if (canTeleport)
         {
+            if (teleportSfx != null)
+            {
+                GameObject soundObject = new GameObject("CoinSFX");
+                soundObject.transform.position = transform.position;
+
+                AudioSource audioSource = soundObject.AddComponent<AudioSource>();
+                audioSource.clip = teleportSfx;
+                audioSource.spatialBlend = 0f;
+                audioSource.Play();
+                audioSource.pitch = 2.4f;
+                Destroy(soundObject, audioSource.clip.length);
+            }
+
             StartCoroutine(Cooldown());
             teleportManager.HandleTeleport(player, this);
         }

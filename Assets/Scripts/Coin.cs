@@ -6,6 +6,7 @@ public class Coin : MonoBehaviour
 {
     [SerializeField] private int coinValue = 200;
     public GameObject coinCollectVFXPrefab;
+    public AudioClip coinCollectSFX; // Assign the AudioClip in the Inspector
 
     public void Collect()
     {
@@ -16,12 +17,26 @@ public class Coin : MonoBehaviour
             {
                 ScoreManager.Instance.AddScore(coinValue);
             }
+
+            // --- VFX ---
             if (coinCollectVFXPrefab != null)
             {
-                Instantiate(coinCollectVFXPrefab, transform.position, Quaternion.identity);
+                GameObject vfxInstance = Instantiate(coinCollectVFXPrefab, transform.position, Quaternion.identity);
+            }
+
+            // --- SFX ---
+            if (coinCollectSFX != null)
+            {
+                GameObject soundObject = new GameObject("CoinSFX");
+                soundObject.transform.position = transform.position;
+
+                AudioSource audioSource = soundObject.AddComponent<AudioSource>();
+                audioSource.clip = coinCollectSFX;
+                audioSource.spatialBlend = 0f; 
+                audioSource.Play();
+                Destroy(soundObject, audioSource.clip.length);
             }
             Destroy(gameObject);
         }
-
     }
 }
