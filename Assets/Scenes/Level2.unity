@@ -19018,6 +19018,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelSelection
       objectReference: {fileID: 0}
+    - target: {fileID: 1619904488671030146, guid: 4e8ce301551ed554a8f4d59d6062ecd4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3854934004513518259, guid: 4e8ce301551ed554a8f4d59d6062ecd4, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -19028,7 +19032,7 @@ PrefabInstance:
       objectReference: {fileID: 1942339590}
     - target: {fileID: 4759603579724869298, guid: 4e8ce301551ed554a8f4d59d6062ecd4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ToLevelSelection
+      value: ToMainMenu
       objectReference: {fileID: 0}
     - target: {fileID: 6360258146013827727, guid: 4e8ce301551ed554a8f4d59d6062ecd4, type: 3}
       propertyPath: m_Pivot.x
@@ -19109,6 +19113,10 @@ PrefabInstance:
     - target: {fileID: 6360258146013827727, guid: 4e8ce301551ed554a8f4d59d6062ecd4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8140120960421065381, guid: 4e8ce301551ed554a8f4d59d6062ecd4, type: 3}
+      propertyPath: m_text
+      value: MAIN MENU
       objectReference: {fileID: 0}
     - target: {fileID: 8140120960421065381, guid: 4e8ce301551ed554a8f4d59d6062ecd4, type: 3}
       propertyPath: m_fontStyle
@@ -32261,7 +32269,7 @@ PrefabInstance:
       objectReference: {fileID: 1942339590}
     - target: {fileID: 4759603579724869298, guid: 4e8ce301551ed554a8f4d59d6062ecd4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ToLevelSelection
+      value: ToMainMenu
       objectReference: {fileID: 0}
     - target: {fileID: 6360258146013827727, guid: 4e8ce301551ed554a8f4d59d6062ecd4, type: 3}
       propertyPath: m_Pivot.x
@@ -32345,7 +32353,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8140120960421065381, guid: 4e8ce301551ed554a8f4d59d6062ecd4, type: 3}
       propertyPath: m_text
-      value: level selection
+      value: MAIN MENU
       objectReference: {fileID: 0}
     - target: {fileID: 8140120960421065381, guid: 4e8ce301551ed554a8f4d59d6062ecd4, type: 3}
       propertyPath: m_fontSizeBase
@@ -58215,6 +58223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainMenuScene: MainMenu
+  titleScreenScene: TitleScreen
   levelScene: SampleScene
   levelScene2: Level2
   levelScene3: Level3
@@ -79172,10 +79181,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level Selection
       objectReference: {fileID: 0}
+    - target: {fileID: 1004764707625268680, guid: 4e8ce301551ed554a8f4d59d6062ecd4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4759603579724869298, guid: 4e8ce301551ed554a8f4d59d6062ecd4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1942339590}
+    - target: {fileID: 4759603579724869298, guid: 4e8ce301551ed554a8f4d59d6062ecd4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToMainMenu
+      objectReference: {fileID: 0}
     - target: {fileID: 6360258146013827727, guid: 4e8ce301551ed554a8f4d59d6062ecd4, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -79255,6 +79272,14 @@ PrefabInstance:
     - target: {fileID: 6360258146013827727, guid: 4e8ce301551ed554a8f4d59d6062ecd4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8140120960421065381, guid: 4e8ce301551ed554a8f4d59d6062ecd4, type: 3}
+      propertyPath: m_text
+      value: MAIN MENU
+      objectReference: {fileID: 0}
+    - target: {fileID: 8140120960421065381, guid: 4e8ce301551ed554a8f4d59d6062ecd4, type: 3}
+      propertyPath: m_margin.z
+      value: -4.968193
       objectReference: {fileID: 0}
     - target: {fileID: 8140120960421065381, guid: 4e8ce301551ed554a8f4d59d6062ecd4, type: 3}
       propertyPath: m_fontSizeBase

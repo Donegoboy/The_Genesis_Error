@@ -9,6 +9,7 @@ using UnityEngine.SocialPlatforms;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private string mainMenuScene = "MainMenu";
+    [SerializeField] private string titleScreenScene = "TitleScreen";
     [SerializeField] private string levelScene = "Level1";
     [SerializeField] private string levelScene2 = "Level2";
     [SerializeField] private string levelScene3 = "Level3";
@@ -19,8 +20,6 @@ public class GameManager : MonoBehaviour
 
     private bool isPaused = false;
     private string levelName;
-
-    public int levelsCompleted = 0;
 
     private void Update()
     {
@@ -35,11 +34,6 @@ public class GameManager : MonoBehaviour
                 Pause();
             }
         }
-    }
-
-    private void Awake()
-    {
-        levelsCompleted = PlayerPrefs.GetInt("Counter", 0);
     }
 
     private string currentSceneName;
@@ -84,20 +78,12 @@ public class GameManager : MonoBehaviour
     public void LevelCompleted()
     {
         levelCompletionPanel.SetActive(true);
-        levelsCompleted++;
-        SaveLevelsCompleted();
-
         Time.timeScale = 1f;
 
         isPaused = true;
 
     }
 
-    private void SaveLevelsCompleted()
-    {
-        PlayerPrefs.SetInt("Countervalue", levelsCompleted);
-        PlayerPrefs.Save();
-    }
 
     public void Pause()
     {
@@ -109,12 +95,10 @@ public class GameManager : MonoBehaviour
     }
 
     public void Start()
-
     {
-
         levelName = SceneManager.GetActiveScene().name;
-
     }
+
     public void Resume()
     {
         Time.timeScale = 1f;
@@ -130,6 +114,14 @@ public class GameManager : MonoBehaviour
 
         SceneManager.LoadScene(mainMenuScene);
     }
+
+    public void ToTitleScreen()
+    {
+        Time.timeScale = 1f;
+
+        SceneManager.LoadScene(titleScreenScene);
+    }
+
     public void ToLevelSelection()
     {
         SceneManager.LoadScene(levelSelection);
