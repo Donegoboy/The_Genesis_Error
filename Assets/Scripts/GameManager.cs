@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
     {
         onDeathPanel.SetActive(true);
 
-        Time.timeScale = 0;
+        Time.timeScale = 1;
 
         isPaused = true;
     }
@@ -64,10 +64,7 @@ public class GameManager : MonoBehaviour
 
         isPaused = false;
 
-
-
         if (!string.IsNullOrEmpty(levelName))
-
         {
 
             SceneManager.LoadScene(levelName);
@@ -94,7 +91,7 @@ public class GameManager : MonoBehaviour
 
 
 
-        Time.timeScale = 0f;
+        Time.timeScale = 1f;
 
         isPaused = true;
 

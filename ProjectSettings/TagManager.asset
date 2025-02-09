@@ -24,6 +24,7 @@ TagManager:
   - OneWayTile
   - Key
   - Exit
+  - Coin
   layers:
   - Default
   - TransparentFX
@@ -39,7 +40,7 @@ TagManager:
   - Edges
   - IceLayer
   - Replacment
-  - 
+  - PostProcesingLayer
   - 
   - 
   - 

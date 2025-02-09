@@ -5,8 +5,13 @@ using UnityEngine;
 
 public class Key : MonoBehaviour
 {
+    public GameObject keyCollectVFXPrefab; // Drag your "Hit_02" prefab here in the Inspector
+
     public void Collect()
     {
+        Debug.Log("Key's Collect() method called!");
+
+        // Find the player and add a key to the inventory
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
@@ -14,9 +19,17 @@ public class Key : MonoBehaviour
             if (inventory != null)
             {
                 inventory.AddKey();
-                
+                Debug.Log("Key added to inventory");
             }
-            Destroy(gameObject);
         }
+
+        // Instantiate the VFX prefab at the key's position
+        if (keyCollectVFXPrefab != null)
+        {
+            Instantiate(keyCollectVFXPrefab, transform.position, Quaternion.identity);
+        }
+
+        // Destroy the key after it's collected
+        Destroy(gameObject);
     }
 }

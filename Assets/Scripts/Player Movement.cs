@@ -38,6 +38,11 @@ public class PlayerMovement : MonoBehaviour
     private bool isDestroyed = false;
     private Coroutine snapCoroutine;
     private GameManager gameManager;
+    public GameObject onDeathVFXPrefab;
+
+    public Vector3 normalScale = Vector3.one;
+    public Vector3 jumpScale = new Vector3(1.2f, 0.8f, 1.2f);
+    public AnimationCurve scaleCurve;
 
     private GameObject activeCamera;
 
@@ -68,6 +73,17 @@ public class PlayerMovement : MonoBehaviour
         {
             activeCamera = Camera.main.gameObject;
         }
+
+        //lerping
+        if (scaleCurve == null || scaleCurve.length == 0)
+        {
+            scaleCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+        }
+        if (playerJumpCurve == null || playerJumpCurve.length == 0)
+        {
+            playerJumpCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+        }
+
     }
 
     private void Update()
@@ -82,13 +98,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleInput()
     {
-        // Jump Input
         if (Input.GetKeyDown(KeyCode.Space) && canJump && !isRotating && !isMoving)
         {
             AttemptJump();
             return;
         }
-        // Restrict movement input to one direction at a time
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
             AttemptRotate(Vector2.up);
@@ -192,7 +206,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void LaunchPlayer(float jumpDistanceMultiplier)
     {
-        Debug.Log("LaunchPlayer called! Multiplier: " + jumpDistanceMultiplier);
         canJump = true;
         isMoving = false;
 
@@ -228,19 +241,21 @@ public class PlayerMovement : MonoBehaviour
         Vector3 startPosition = transform.position;
         Vector3 endPosition = targetPosition;
 
-        isMoving = true; 
+        isMoving = true;
         canJump = false;
         isJumping = true;
 
         if (circleCollider != null)
         {
-            circleCollider.enabled = false; 
+            circleCollider.enabled = false;
         }
+
+        Vector3 initialScale = transform.localScale;
 
         while (elapsed < jumpDuration)
         {
             elapsed += Time.deltaTime;
-            float timer = Mathf.Clamp01(elapsed / jumpDuration); 
+            float timer = Mathf.Clamp01(elapsed / jumpDuration);
 
             float curve = playerJumpCurve.Evaluate(timer);
 
@@ -249,6 +264,7 @@ public class PlayerMovement : MonoBehaviour
             if (IsCollidingDuringLerp(newPosition))
             {
                 transform.position = startPosition;
+                transform.localScale = initialScale;
                 isJumping = false;
                 canJump = true;
                 CheckForHole();
@@ -256,7 +272,12 @@ public class PlayerMovement : MonoBehaviour
             }
 
             transform.position = newPosition;
-            yield return null; 
+
+            float scaleT = scaleCurve.Evaluate(timer);
+            Vector3 currentScale = Vector3.Lerp(normalScale, jumpScale, scaleT);
+            transform.localScale = currentScale;
+
+            yield return null;
         }
 
         if (circleCollider != null)
@@ -265,6 +286,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         transform.position = endPosition;
+        transform.localScale = normalScale;
         isJumping = false;
         canJump = true;
         isMoving = false;
@@ -355,6 +377,12 @@ public class PlayerMovement : MonoBehaviour
             Key keyScript = other.GetComponent<Key>();
             keyScript.Collect();
         }
+        if (other.CompareTag("Coin"))
+        {
+            Coin coinScript = other.GetComponent<Coin>();
+            coinScript.Collect();
+        }
+
         if (isTeleporting) return;
     }
 
@@ -371,6 +399,11 @@ public class PlayerMovement : MonoBehaviour
                 canJump = false;
                 isDestroyed = true;
                 circleCollider.enabled = false;
+
+                if (onDeathVFXPrefab != null)
+                {
+                    Instantiate(onDeathVFXPrefab, transform.position, Quaternion.identity);
+                }
                 Destroy(gameObject);
                 gameManager.onDeath();
             }
