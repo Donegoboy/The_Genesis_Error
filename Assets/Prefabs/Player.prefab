@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 4900856192565751787}
   - component: {fileID: 3960710740802378096}
   - component: {fileID: 5039969987730679202}
-  - component: {fileID: 3531318375869619731}
-  - component: {fileID: 3435227618904124723}
   - component: {fileID: 2648176050738446491}
   m_Layer: 8
   m_Name: Player
@@ -115,72 +113,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!95 &3531318375869619731
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1291506086507534680}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 34957140a20660149890fd088c535103, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!61 &3435227618904124723
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1291506086507534680}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.51021385, y: -0.13172913}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 42.666668, y: 42.666668}
-    newSize: {x: 42.666668, y: 42.666668}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 42.07176, y: 42.09224}
-  m_EdgeRadius: 0
 --- !u!114 &2648176050738446491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,6 +154,8 @@ MonoBehaviour:
   canJump: 1
   targetRotation: {x: 0, y: 0, z: 0, w: 0}
   onDeathVFXPrefab: {fileID: 0}
+  onDeathSfx: {fileID: 8300000, guid: 726df1fa114b64773ad65856d81b7c12, type: 3}
+  onLandingSfx: {fileID: 8300000, guid: 5a6ad48d02c634b579f315c04a42be00, type: 3}
   normalScale: {x: 1, y: 1, z: 1}
   jumpScale: {x: 1.2, y: 0.8, z: 1.2}
   scaleCurve:

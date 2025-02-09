@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8079546176608604041}
   - component: {fileID: 4776825495282837398}
   - component: {fileID: 4759603579724869298}
+  - component: {fileID: 4887007007744430359}
   m_Layer: 5
   m_Name: BUTTONS
   m_TagString: Untagged
@@ -133,6 +134,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4887007007744430359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004764707625268680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8e1616951aea6446b529b8ac7116dd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: b184dc1011ef14941abfd42313cda4e1, type: 3}
+  audioSource: {fileID: 0}
+  cooldown: 0.2
 --- !u!1 &1619904488671030146
 GameObject:
   m_ObjectHideFlags: 0

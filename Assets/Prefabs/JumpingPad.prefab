@@ -144,3 +144,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpDistanceMultiplier: 2
+  jumpingPadSfx: {fileID: 8300000, guid: f58d50709a165994e89ebb9351033113, type: 3}

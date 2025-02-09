@@ -6,7 +6,8 @@ public class DestructibleTile : MonoBehaviour
 {
 
     public GameObject replacementTilePrefab; 
-    public string replacementLayerName = "ReplacementLayerName"; 
+    public string replacementLayerName = "ReplacementLayerName";
+    public AudioClip breakingSfx;
 
     public GameObject otherTile;
 
@@ -24,6 +25,18 @@ public class DestructibleTile : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player") && playerInside)
         {
+            if (breakingSfx != null)
+            {
+                GameObject soundObject = new GameObject("BreakingSFX");
+                soundObject.transform.position = transform.position;
+
+                AudioSource audioSource = soundObject.AddComponent<AudioSource>();
+                audioSource.clip = breakingSfx;
+                audioSource.spatialBlend = 0f;
+                //audioSource.pitch = 2.5f;
+                audioSource.Play();
+                Destroy(soundObject, audioSource.clip.length);
+            }
             DestroyTile();
         }
     }

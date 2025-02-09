@@ -60,18 +60,14 @@ public class GameManager : MonoBehaviour
     }
 
     public void Retry()
-
     {
-
         Time.timeScale = 1f;
 
         isPaused = false;
 
         if (!string.IsNullOrEmpty(levelName))
         {
-
             SceneManager.LoadScene(levelName);
-
         }
 
     }
@@ -79,7 +75,6 @@ public class GameManager : MonoBehaviour
     {
         levelCompletionPanel.SetActive(true);
         Time.timeScale = 1f;
-
         isPaused = true;
 
     }

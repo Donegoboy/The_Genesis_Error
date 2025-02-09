@@ -18,15 +18,13 @@ public class Audio : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
         {
-            Debug.LogError("AudioSource component missing on " + gameObject.name);
-            Destroy(this); // Destroy this script if no AudioSource.  Prevent errors.
+            Destroy(this); 
             return;
         }
     }
 
     private void Update()
     {
-        // Destroy this GameObject *after* the sound has finished playing.
         if (!audioSource.isPlaying)
         {
             Destroy(gameObject);

@@ -175,6 +175,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   replacementTilePrefab: {fileID: 7792856930109202515, guid: a4c52f083ba152b4d9318c6d70e5bd88, type: 3}
   replacementLayerName: Hole
+  breakingSfx: {fileID: 8300000, guid: fc96e7c7687ce9b4f9f6caa5f2c9e636, type: 3}
+  otherTile: {fileID: 0}
 --- !u!19719996 &6851342820388210776
 TilemapCollider2D:
   m_ObjectHideFlags: 0

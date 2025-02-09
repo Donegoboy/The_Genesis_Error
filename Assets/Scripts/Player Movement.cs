@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Tilemaps;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour         //Najgora skripta godine je.... *insert drum roll*...
 {
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 5f;
@@ -33,12 +33,14 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 facingDirection = Vector2.up;
     public bool isMoving = false;
     public bool canJump = true; 
-    private bool isRotating = false;
+    public bool isRotating = false;
     public Quaternion targetRotation;
     private bool isDestroyed = false;
     private Coroutine snapCoroutine;
     private GameManager gameManager;
     public GameObject onDeathVFXPrefab;
+    public AudioClip onDeathSfx;
+    public AudioClip onLandingSfx;
 
     public Vector3 normalScale = Vector3.one;
     public Vector3 jumpScale = new Vector3(1.2f, 0.8f, 1.2f);
@@ -100,6 +102,19 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && canJump && !isRotating && !isMoving)
         {
+            if (onLandingSfx != null)
+            {
+                GameObject soundObject = new GameObject("onLandingSfx");
+                soundObject.transform.position = transform.position;
+
+                AudioSource audioSource = soundObject.AddComponent<AudioSource>();
+                audioSource.clip = onLandingSfx;
+                audioSource.spatialBlend = 0f;
+                audioSource.pitch = 2.5f;
+                audioSource.Play();
+                Destroy(soundObject, audioSource.clip.length);
+            }
+
             AttemptJump();
             return;
         }
@@ -400,10 +415,24 @@ public class PlayerMovement : MonoBehaviour
                 isDestroyed = true;
                 circleCollider.enabled = false;
 
+                if (onDeathSfx != null)
+                {
+                    GameObject soundObject = new GameObject("onDeathSfx");
+                    soundObject.transform.position = transform.position;
+
+                    AudioSource audioSource = soundObject.AddComponent<AudioSource>();
+                    audioSource.clip = onDeathSfx;
+                    audioSource.spatialBlend = 0f;
+                    audioSource.pitch = 2.5f;
+                    audioSource.Play();
+                    Destroy(soundObject, audioSource.clip.length);
+                }
+
                 if (onDeathVFXPrefab != null)
                 {
                     Instantiate(onDeathVFXPrefab, transform.position, Quaternion.identity);
                 }
+
                 Destroy(gameObject);
                 gameManager.onDeath();
             }
